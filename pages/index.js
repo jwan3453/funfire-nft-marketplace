@@ -12,7 +12,9 @@ import {
   NFTCard, 
   Title, 
   Category,
-  Slider 
+  Slider ,
+  Brand,
+  Video,
 } from '../components/componentIndex';
 const  Home = () => {
   return (
@@ -45,6 +47,8 @@ const  Home = () => {
       />
       <AudioLive/>
       <Slider/>
+      <Brand />
+      <Video />
     </div>
   )
 }

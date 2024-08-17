@@ -1,6 +1,5 @@
 
 .audioCard_box{
-    border: 1px solid red;
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     grid-template-rows: repeat(6, 4rem);

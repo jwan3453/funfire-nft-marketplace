@@ -1,5 +1,5 @@
 .navbar{
-    border:1px solid red;
+    /* border:1px solid red; */
     width: 100%;
     padding-block: 1.5rem;
     position: relative;
@@ -7,7 +7,8 @@
 }
 
 .navbar_container{
-    border:1px solid red;
+    /* border:1px solid red; */
+    width: 85%;
     margin: 0 auto;
     display: grid;
 
@@ -26,8 +27,21 @@
 .logo{
     color: var(--icons-color);
     font-size: 4rem;
+    margin-left: 3rem;
+    border-radius: 100%;
+    cursor:pointer;
+    transition:  all .1s ease-in;
   }
 
+  .logo:hover{
+    transform: scale(1.1);
+    transform-origin: center;
+  }
+
+
+  .logo_image {
+    border-radius:100%;
+  }
 .navbar_container_left_box_input_box{
     width: 60%;
     border: 1px solid var(--icons-color);
@@ -63,10 +77,17 @@
     position: relative;
     cursor: pointer;
 }
+.navbar_container_right_discover p {
+    user-select:none;
+}
 
 .navbar_container_right_help{
     position: relative;
     cursor: pointer;
+}
+
+.navbar_container_right_help p {
+    user-select: none;
 }
 
 .navbar_container_right_discover_box,
@@ -91,13 +112,13 @@
 }
 
 .navbar_container_right_button{
-    border:1px solid black;
+    /* border:1px solid black; */
     position: relative;
     cursor: pointer;
 }
 
 .navbar_container_right_profile_box{
-    border:1px solid black;
+    /* border:1px solid black; */
     position: relative;
     cursor: pointer;
 }

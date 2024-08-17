@@ -9,9 +9,9 @@ import images from "../../../img";
 
 const SliderCard = ({ el, i }) => {
   return (
-    <div className={Style.sliderCard}>
+    <motion.div className={Style.sliderCard}>
       <div className={Style.sliderCard_box}>
-        <div className={Style.sliderCard_box_img}>
+        <motion.div className={Style.sliderCard_box_img}>
           <Image
             src={el.background}
             className={Style.sliderCard_box_img_img}
@@ -20,7 +20,7 @@ const SliderCard = ({ el, i }) => {
             height={300}
             objectFit="cover"
           />
-        </div>
+        </motion.div>
         <div className={Style.sliderCard_box_title}>
           <p>NFT Video #{i + 1}</p>
           <div className={Style.sliderCard_box_title_like}>
@@ -43,7 +43,7 @@ const SliderCard = ({ el, i }) => {
           </div>
         </div>
       </div>
-    </div>
+    </motion.div>
   );
 };
 

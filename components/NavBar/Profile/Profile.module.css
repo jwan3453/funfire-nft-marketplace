@@ -1,6 +1,6 @@
 
 .profile{
-    border: 1px solid yellow;
+    /* border: 1px solid yellow; */
     position: absolute;
     padding: 2rem .5rem;
     box-shadow: var(--box-shadow);
@@ -16,7 +16,6 @@
 }
 
 .profile_account{
-    border: 1px solid red;
     display: flex;
     align-items: flex-start;
     gap: 2rem;
@@ -37,7 +36,7 @@
 
 .profile_menu_one {
 
-    border: 1px solid red;
+
 }
 
 .profile_menu_one_item{

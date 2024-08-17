@@ -14,14 +14,12 @@
 }
 
 .notification > p{
-    border: 1px solid red;
     font-size: 1.3rem;
     font-weight: 600;
     margin-bottom: 2rem;
 }
 
 .notification_box{
-    border: 1px solid red;
     display: flex;
     align-items: flex-start;
     gap: 1rem;
@@ -40,7 +38,6 @@
 }
 
 .notification_box_info{ 
-    border: 1px solid red;
     line-height: 0;
     margin-top: -.8rem;
 }

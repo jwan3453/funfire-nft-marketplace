@@ -5,7 +5,7 @@ import Link from "next/link";
 //INTERNAL IMPORT
 import Style from "./Discover.module.css";
 
-const Discover = () => {
+const Discover = ({ closeMenu }) => {
     //--------DISCOVER NAVIGATION MENU
     const discover = [
     {
@@ -14,19 +14,11 @@ const Discover = () => {
     },
     {
         name: "Search",
-        link: "searchPage",
+        link: "search",
     },
     {
         name: "Author Profile",
         link: "author",
-    },
-    {
-        name: "NFT Details",
-        link: "NFT-details",
-    },
-    {
-        name: "Account Setting",
-        link: "account",
     },
     {
         name: "Upload NFT",
@@ -35,16 +27,12 @@ const Discover = () => {
     {
         name: "Connect Wallet",
         link: "connectWallet",
-    },
-    {
-        name: "Blog",
-        link: "blog",
-    },
+    }
     ]; 
     return (
         <div>
         {discover.map((el, i) => (
-          <div key={el.name} className={Style.discover}>
+          <div key={el.name} className={Style.discover} onClick={() => closeMenu()}>
             <Link href={{ pathname: `${el.link}` }}>{el.name}</Link>
           </div>
         ))}

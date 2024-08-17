@@ -9,7 +9,7 @@
 }
 
 .NFTCard_box{
-    border: 2px solid red;
+    /* border: 2px solid red; */
     background-color: var(--shadow-light-color);
     padding: 1rem;
     border-radius: 1rem;
@@ -33,7 +33,7 @@
 }
 
 .NFTCard_box_update{
-    border: 3px solid red;
+    /* border: 3px solid red; */
     grid-column: 1 /-1; 
      grid-row: 1 / -2;
     z-index: 1111;
@@ -89,7 +89,7 @@
     grid-row:  1 / end;
     overflow: hidden;
     border-radius: 1rem;
-    border: 1px solid red;
+    /* border: 1px solid red; */
 }
 
 .NFTCard_box_img_img{
@@ -98,7 +98,7 @@
 }
 
 .NFTCard_box_update_details{
-    border: 5px solid green;
+    /* border: 5px solid green; */
     grid-column: 1 /-1;
     grid-row: 3 / -1;
     line-height: 0;

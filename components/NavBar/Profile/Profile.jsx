@@ -8,12 +8,12 @@ import Link from "next/link";
 import Style from "./Profile.module.css";
 import images from "../../../img";
 
-const Profile = ({ currentAccount="" }) => {
+const Profile = ({ currentAccount, closeMenu }) => {
     return (
         <div className={Style.profile}>
             <div className={Style.profile_account}>
                 <Image
-                    src={images.user1}
+                    src={images.defaultUser}
                     alt="user profile"
                     width={50}
                     height={50}
@@ -21,13 +21,13 @@ const Profile = ({ currentAccount="" }) => {
                 />
 
                 <div className={Style.profile_account_info}>
-                    <p>Shoaib Bhai</p>
+                    <p>Anonymous artist</p>
                     <small>{currentAccount.slice(0, 18)}..</small>
                 </div>
             </div>
 
             <div className={Style.profile_menu}>
-                <div className={Style.profile_menu_one}>
+                <div className={Style.profile_menu_one} onClick={()=>closeMenu()}>
                     <div className={Style.profile_menu_one_item}>
                         <FaUserAlt />
                         <p>
@@ -48,7 +48,7 @@ const Profile = ({ currentAccount="" }) => {
                     </div>
                 </div>
 
-                <div className={Style.profile_menu_two}>
+                <div className={Style.profile_menu_two} onClick={()=>closeMenu()}>
                     <div className={Style.profile_menu_one_item}>
                         <MdHelpCenter />
                         <p>
@@ -56,7 +56,7 @@ const Profile = ({ currentAccount="" }) => {
                         </p>
                     </div>
                     <div className={Style.profile_menu_one_item}>
-                        <TbDownload />N
+                        <TbDownload />
                         <p>
                             <Link href={{ pathname: "/aboutus" }}>About Us</Link>
                         </p>

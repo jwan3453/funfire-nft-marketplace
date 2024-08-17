@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext ,  CSSProperties } from "react";
 import Image from 'next/image';
 import Link from 'next/link';
 import { MdNotifications } from 'react-icons/md'
@@ -6,42 +6,62 @@ import { CgMenuLeft, CgMenuRight } from 'react-icons/cg'
 
 import Style from './NavBar.module.css'
 import { Discover, Notification, HelpCenter, Profile, SideBar } from './index';
-import { Button } from "../componentIndex"
+import { Button, Error } from "../componentIndex"
 import images from "../../img";
-import { DiJqueryLogo } from "react-icons/di";
 import { BsSearch } from "react-icons/bs";
+import { useRouter } from "next/router";
+
+//IMPORT FROM SMART CONTRACT
+import { NFTMarketplaceContext } from "../../context/NFTMarketplaceContext";
+
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
+import PuffLoader from "react-spinners/PuffLoader";
+
+
+const override = {
+    position: "absolute",
+    top: 100,
+    right: `calc(50% - 25px)`,
+    top: `calc(50% - 25px)`,
+    display: "block",
+    margin: "0 auto",
+    // borderColor: "red",
+  };
 
 const NavBar = () => {
-
-    const [currentAccount, setCurrentAccount ] = useState("");
+    const notify = (message) => toast(message);
+    // const [currentAccount, setCurrentAccount ] = useState("");
     const [discover, setDiscover] = useState(false);
     const [help, setHelp] = useState(false);
     const [notification, setNotification] = useState(false);
     const [profile, setProfile] = useState(false);
     const [openSideMenu, setOpenSideMenu] = useState(false);
+    const router = useRouter();
+    let [color, setColor] = useState("#4C5773");
 
 
     const openMenu = (e) => {
         const btnText = e.target.innerText;
         if (btnText == "Discover") {
-            setDiscover(true);
-            setHelp(false);
-            setNotification(false);
-            setProfile(false);
+          setDiscover(!discover);
+          setHelp(false);
+          setNotification(false);
+          setProfile(false);
         } else if (btnText == "Help Center") {
-            setDiscover(false);
-            setHelp(true);
-            setNotification(false);
-            setProfile(false);
+          setDiscover(false);
+          setHelp(!help);
+          setNotification(false);
+          setProfile(false);
         } else {
-            setDiscover(false);
-            setHelp(false);
-            setNotification(false);
-            setProfile(false);
+          setDiscover(false);
+          setHelp(false);
+          setNotification(false);
+          setProfile(false);
         }
-    }
+      };
     
     const openNotification = () => {
         if (!notification) {
@@ -65,30 +85,64 @@ const NavBar = () => {
         }
       };
     
-    
-    const openSideBar = () => {
-   
-        if (!openSideMenu) {
-          setOpenSideMenu(true);
-        } else {
-          setOpenSideMenu(false);
-        }
-      };
-    
 
+      const closeMenu = () => {
+        setProfile(false);
+        setHelp(false);
+        setDiscover(false);
+        setNotification(false);
+      }    
+    // const openSideBar = () => {
+   
+    //     if (!openSideMenu) {
+    //       setOpenSideMenu(true);
+    //     } else {
+    //       setOpenSideMenu(false);
+    //     }
+    //   };
+
+      const { 
+            currentAccount, 
+            connectWallet,
+            openError,
+            setOpenError,
+            error,
+            loading,
+            setLoading
+        } = useContext(
+            NFTMarketplaceContext
+        );
+    
+      useEffect(() => {
+        if(openError) {
+            notify(error)
+            setTimeout(() => {
+                setOpenError(false)
+            }, 500)
+        }
+      }, [openError])
     return (
         <div className={Style.navbar}>
             <div className={Style.navbar_container}>
                 <div className={Style.navbar_container_left}>
                     <div className={Style.logo}>
-                        <DiJqueryLogo onClick={() => router.push("/")} />
+                        {/* <DiJqueryLogo onClick={() => router.push("/")} /> */}
+                        <Image
+                            src={images.logo}
+                            // alt="Profile"
+                            width={60}
+                            height={60}
+                            onClick={() => router.push("/")} 
+                            className={Style.logo_image}
+                        />
+
                     </div>
-                    <div className={Style.navbar_container_left_box_input}>
+                    {/* <div className={Style.navbar_container_left_box_input}>
                         <div className={Style.navbar_container_left_box_input_box}>
                             <input type="text" placeholder="Search NFT" />
                             <BsSearch onClick={() => { }} className={Style.search_icon} />
                         </div>
-                    </div>
+                    </div> */}
                 </div>
 
                 <div className={Style.navbar_container_right}>
@@ -96,7 +150,7 @@ const NavBar = () => {
                         <p onClick={(e) => openMenu(e)}>Discover</p>
                         {discover && (
                             <div className={Style.navbar_container_right_discover_box}>
-                                <Discover />
+                                <Discover closeMenu={() => closeMenu()}></Discover>
                             </div>
                         )}
                     </div>
@@ -105,7 +159,7 @@ const NavBar = () => {
                             <p onClick={(e) => openMenu(e)}>Help Center</p>
                             {help && (
                                 <div className={Style.navbar_container_right_help_box}>
-                                    <HelpCenter />
+                                    <HelpCenter  closeMenu={() => closeMenu()}/>
                                 </div>
                             )}
                         </div>
@@ -133,20 +187,24 @@ const NavBar = () => {
                             )}
                         </div>
 
-                        <div className={Style.navbar_container_right_profile_box}>
-                            <div className={Style.navbar_container_right_profile}>
-                                <Image
-                                    src={images.user1}
-                                    alt="Profile"
-                                    width={40}
-                                    height={40}
-                                    onClick={() => openProfile()}
-                                    className={Style.navbar_container_right_profile}
-                                />
+                        {
+                            currentAccount &&                         
+                            <div className={Style.navbar_container_right_profile_box}>
+                                <div className={Style.navbar_container_right_profile}>
+                                    <Image
+                                        src={images.defaultUser}
+                                        alt="Profile"
+                                        width={60}
+                                        height={60}
+                                        onClick={() => openProfile()}
+                                        className={Style.navbar_container_right_profile}
+                                    />
 
-                                {profile && <Profile />}
+                                    {profile && <Profile closeMenu={closeMenu} currentAccount={currentAccount}/>}
+                                </div>
                             </div>
-                        </div>
+                        }
+
 
                         {/* MENU BUTTON */}
 
@@ -166,10 +224,40 @@ const NavBar = () => {
                     <SideBar
                         setOpenSideMenu={setOpenSideMenu}
                         currentAccount={currentAccount}
-                        // connectWallet={connectWallet}
-                    />
+                        connectWallet={connectWallet}
+                        />
                 </div>
             )}
+
+
+            <ToastContainer 
+                position="top-center"
+                autoClose={4000}
+                // hideProgressBar={false}
+                // newestOnTop={false}
+                // closeOnClick
+                // rtl={false}
+                // pauseOnFocusLoss
+                // draggable
+                // pauseOnHover
+                // theme="light"
+                // transition="Bounce"
+            />
+            
+            {
+                loading &&
+                <div style={{width: '100%', height: '100vh', position: 'fixed'}}>
+                    <PuffLoader
+                        color={color}
+                        loading={loading}
+                        cssOverride={override}
+                        size={50}
+                        aria-label="Loading Spinner"
+                        data-testid="loader"
+                    />
+                </div>
+            }
+
         </div>
     )
 }

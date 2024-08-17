@@ -25,7 +25,7 @@ import service2 from "./service-2.png";
 import service3 from "./service-3.png";
 import service4 from "./service-4.png";
 import logoLight from "./logo-light.svg";
-import logo from "./logo.svg";
+import logo from "./logo.png";
 import facebook from "./facebook.svg";
 import twitter from "./twitter.svg";
 import telegram from "./telegram.svg";
@@ -57,6 +57,8 @@ import loader from "./loadergif.gif";
 import errorgif from "./error.gif";
 import transfer from "./transfer.gif";
 import transferEther from "./ethereTransfer.gif";
+import defaultUser from './default_user.png';
+import google from './google.png';
 
 export default {
   hero2,
@@ -113,9 +115,11 @@ export default {
   vector,
   vimeo,
   youtube,
+  google,
   zgcmq,
   loader,
   errorgif,
   transfer,
   transferEther,
+  defaultUser
 };

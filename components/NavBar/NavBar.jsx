@@ -121,6 +121,8 @@ const NavBar = () => {
             }, 500)
         }
       }, [openError])
+
+      console.log('currentAccount123', currentAccount);
     return (
         <div className={Style.navbar}>
             <div className={Style.navbar_container}>
@@ -188,19 +190,40 @@ const NavBar = () => {
                         </div>
 
                         {
-                            currentAccount &&                         
-                            <div className={Style.navbar_container_right_profile_box}>
+                            currentAccount !=='' &&                         
+                            <div className={Style.navbar_container_right_profile_box} >
                                 <div className={Style.navbar_container_right_profile}>
-                                    <Image
-                                        src={images.defaultUser}
-                                        alt="Profile"
-                                        width={60}
-                                        height={60}
-                                        onClick={() => openProfile()}
-                                        className={Style.navbar_container_right_profile}
-                                    />
+                                   
 
-                                    {profile && <Profile closeMenu={closeMenu} currentAccount={currentAccount}/>}
+                                        <div 
+                                            className={Style.navbar_container_right_profile_connectBox}
+                                            style={{ 
+                             
+                                            }}>
+                                                    <div className={Style.navbar_container_right_profile_connectBox_address}>{currentAccount.slice(0, 12)}</div>
+                                                    <div style={{ marginTop: '0.7rem', position: "relative", width: `${30}px`, height: `${30}px` }}>
+                                                    <Image
+                                                            src={images.provider1}
+                                                            alt={images.provider1}
+                                                            width={40}
+                                                            height={40}
+                                                            style={{ objectFit: "contain" }}
+                                                            // objectFit=
+                                                            // className={Style.navbar_container_right_profile_connectBox_logo}
+                                                    />
+                                                    </div>
+                                                
+                                         </div>
+                                        <Image
+                                            src={images.defaultUser}
+                                            alt="Profile"
+                                            width={50}
+                                            height={50}
+                                            onClick={() => openProfile()}
+                                            className={Style.navbar_container_right_profile_image}
+                                        />
+                                        {profile && <Profile closeMenu={closeMenu} currentAccount={currentAccount}/>}
+                                    
                                 </div>
                             </div>
                         }
@@ -246,16 +269,18 @@ const NavBar = () => {
             
             {
                 loading &&
-                <div style={{width: '100%', height: '100vh', position: 'fixed'}}>
-                    <PuffLoader
-                        color={color}
-                        loading={loading}
-                        cssOverride={override}
-                        size={50}
-                        aria-label="Loading Spinner"
-                        data-testid="loader"
-                    />
-                </div>
+               
+                    <div style={{width: '100%', height: '100vh', position: 'fixed'}}>
+                        <PuffLoader
+                            color={color}
+                            loading={loading}
+                            cssOverride={override}
+                            size={50}
+                            aria-label="Loading Spinner"
+                            data-testid="loader"
+                        />
+                    </div>
+    
             }
 
         </div>

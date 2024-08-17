@@ -120,7 +120,7 @@ export const NFTMarketplaceProvider = ({ children }) => {
 				return setOpenError(true), setError("Install MetaMask");
 			const network = await handleNetworkSwitch();
 			const accounts = await window.ethereum.request({
-				method: "eth_accounts",
+				method: "eth_requestAccounts",
 			});
 
 			if (accounts.length) {
@@ -173,7 +173,7 @@ export const NFTMarketplaceProvider = ({ children }) => {
 	const createNFT = async (name, price, image, description, router) => {
 		setLoading(true);
 		if (!name || !description || !price || !image)
-			return setError("NFT Data Is Missing"), setOpenError(true);
+			return setError("NFT Data Is Missing"), setOpenError(true), setLoading(false);;
 
 
 		const data = JSON.stringify({ name, description, image });

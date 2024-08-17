@@ -65,6 +65,7 @@
 
 .NFTCardTwo_box_info_left{
     line-height: 0;
+
 }
 
 .NFTCardTwo_box_info small{
@@ -72,8 +73,9 @@
 }
 
 .NFTCardTwo_box_info_left p{
-    font-size: 2rem;
+    font-size: 1.5rem;
     font-weight: 900;
+
 } 
 
 .NFTCardTwo_box_price{

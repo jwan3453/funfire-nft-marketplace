@@ -351,13 +351,14 @@ export const NFTMarketplaceProvider = ({ children }) => {
 			const transaction = await contract.createMarketSale(nft.tokenId, {
 				value: price,
 			});
-
+			console.log('transaction', transaction)
 			await transaction.wait();
 			setLoading(false);
 			router.push("/author");
 		} catch (error) {
+			// console.log('error', JSON.parse(error));
 			setLoading(false);
-			setError("Error While buying NFT");
+			setError(error.length <= 30 ? error : error.toString().slice(0, 30) + '.....');
 			setOpenError(true);
 		}
 	};

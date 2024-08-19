@@ -59,8 +59,12 @@ import transfer from "./transfer.gif";
 import transferEther from "./ethereTransfer.gif";
 import defaultUser from './default_user.png';
 import google from './google.png';
+import day from './day.png';
+import night from './night.png';
 
 export default {
+  day,
+  night,
   hero2,
   founder1,
   founder2,

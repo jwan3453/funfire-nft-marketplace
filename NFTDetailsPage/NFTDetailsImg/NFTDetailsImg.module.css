@@ -18,6 +18,7 @@
 }
 
 .NFTDetailsImg_box_NFT_like{
+
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -29,6 +30,7 @@
 }
 
 .NFTDetailsImg_box_NFT_like p{
+    margin-right: 6rem;
     background-color: var(--icons-color);
     padding: .2rem 1rem;
     color: var(--main-bg-color);

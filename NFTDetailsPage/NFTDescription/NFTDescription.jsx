@@ -180,7 +180,7 @@ const NFTDescription = ({ nft }) => {
                 {/* <Link href={{ pathname: "/author", query: `${nft.seller}` }}> */}
                 <Link href={{ pathname: "/author" }}>
                   <span>
-                    Karli Costa <MdVerified />
+                    <MdVerified />
                   </span>
                 </Link>
               </div>

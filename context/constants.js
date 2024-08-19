@@ -12,12 +12,12 @@ const networks = {
     chainId: `0x${Number(11155111).toString(16)}`,
     chainName: "Sepolia",
     nativeCurrency: {
-      name: "ETH",
+      name: "sepoliaETH",
       symbol: "ETH",
       decimals: 18,
     },
-    rpcUrls: ["https://sepolia.drpc.org"],
-    blockExplorerUrls: ["https://sepolia.etherscan.io/"],
+    rpcUrls: ["https://sepolia.infura.io/v3/"],
+    blockExplorerUrls: ["https://sepolia.etherscan.io"],
   },
   localhost: {
     chainId: `0x${Number(31337).toString(16)}`,
@@ -36,14 +36,16 @@ const networks = {
   const changeNetwork = async ({ networkName }) => {
     try {
       if (!window.ethereum) throw new Error("No crypto wallet found");
-      await window.ethereum.request({
-        method: "wallet_addEthereumChain",
-        params: [
-          {
-            ...networks[networkName],
-          },
-        ],
+      const result  =  await window.ethereum.request({
+        method: "wallet_switchEthereumChain",
+        params: [{  chainId: `0x${Number(11155111).toString(16)}`,}],
+        // params: [
+        //   {
+        //     ...networks[networkName],
+        //   },
+        // ],
       });
+      // console.log('wallet_switchEthereumChain', result)
     } catch (err) {
       console.log(err.message);
     }

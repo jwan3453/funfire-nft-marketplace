@@ -215,11 +215,8 @@ export const NFTMarketplaceProvider = ({ children }) => {
 		try {
 
 			const price = ethers.parseUnits(formInputPrice, "ether");
-			console.log('啥玩意1', contract,  listingPrice);
 			const contract = await connectingWithSmartContract();
-			console.log('啥玩意2', contract,  listingPrice);
 			const listingPrice = await contract.getFunction("getListingPrice").call(null);
-			console.log('啥玩意3', contract,  listingPrice);
 			const transaction = !isReselling
 				? await contract.createToken(url, price, {
 					value: listingPrice.toString(),
@@ -248,13 +245,13 @@ export const NFTMarketplaceProvider = ({ children }) => {
 			// const contract = fetchContract(provider);
 
 			const contract = await connectingWithSmartContract()
-			console.log('sss', contract)
+	
 			const data = await contract.fetchMarketItems();
-			console.log('data', data);
+
 			const items = await Promise.all(
 				data.map(
 					async ({ tokenId, seller, owner, price: unformattedPrice }) => {
-						console.log('wtf', tokenId, seller);
+	
 						const tokenURI = await contract.tokenURI(tokenId);
 
 						const {
@@ -317,7 +314,7 @@ export const NFTMarketplaceProvider = ({ children }) => {
 								unformattedPrice.toString(),
 								"ether"
 							);
-							console.log('wtf', image, name,description, tokenId );
+						
 							return {
 								price,
 								tokenId: parseInt(tokenId),
@@ -346,6 +343,7 @@ export const NFTMarketplaceProvider = ({ children }) => {
 
 	//---BUY NFTs FUNCTION
 	const buyNFT = async (nft) => {
+		setLoading(true);
 		try {
 			const contract = await connectingWithSmartContract();
 			const price = ethers.parseUnits(nft.price.toString(), "ether");
@@ -355,8 +353,10 @@ export const NFTMarketplaceProvider = ({ children }) => {
 			});
 
 			await transaction.wait();
+			setLoading(false);
 			router.push("/author");
 		} catch (error) {
+			setLoading(false);
 			setError("Error While buying NFT");
 			setOpenError(true);
 		}

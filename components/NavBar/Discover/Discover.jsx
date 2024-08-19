@@ -32,9 +32,11 @@ const Discover = ({ closeMenu }) => {
     return (
         <div>
         {discover.map((el, i) => (
-          <div key={el.name} className={Style.discover} onClick={() => closeMenu()}>
-            <Link href={{ pathname: `${el.link}` }}>{el.name}</Link>
-          </div>
+            <Link href={{ pathname: `${el.link}` }}>
+            <div key={el.name} className={Style.discover} onClick={() => closeMenu()}>
+                {el.name}
+            </div>
+          </Link>
         ))}
       </div>
     )

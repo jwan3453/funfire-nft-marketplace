@@ -36,7 +36,7 @@ const NFTDetailsImg = ({ nft }) => {
       setLike(false);
     }
   };
-
+  console.log('nft.image', nft.image);
   return (
     <div className={Style.NFTDetailsImg}>
       <div className={Style.NFTDetailsImg_box}>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext ,  CSSProperties } from "react";
+import React, { useState, useEffect, useContext, CSSProperties } from "react";
 import Image from 'next/image';
 import Link from 'next/link';
 import { MdNotifications } from 'react-icons/md'
@@ -19,6 +19,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 import PuffLoader from "react-spinners/PuffLoader";
+import { useTheme } from "next-themes";
 
 
 const override = {
@@ -29,7 +30,7 @@ const override = {
     display: "block",
     margin: "0 auto",
     // borderColor: "red",
-  };
+};
 
 const NavBar = () => {
     const notify = (message) => toast(message);
@@ -39,30 +40,31 @@ const NavBar = () => {
     const [notification, setNotification] = useState(false);
     const [profile, setProfile] = useState(false);
     const [openSideMenu, setOpenSideMenu] = useState(false);
+    const [lightMode, setlightMode] = useState(true);
     const router = useRouter();
     let [color, setColor] = useState("#4C5773");
-
+    const { theme, setTheme } = useTheme()
 
     const openMenu = (e) => {
         const btnText = e.target.innerText;
         if (btnText == "Discover") {
-          setDiscover(!discover);
-          setHelp(false);
-          setNotification(false);
-          setProfile(false);
+            setDiscover(!discover);
+            setHelp(false);
+            setNotification(false);
+            setProfile(false);
         } else if (btnText == "Help Center") {
-          setDiscover(false);
-          setHelp(!help);
-          setNotification(false);
-          setProfile(false);
+            setDiscover(false);
+            setHelp(!help);
+            setNotification(false);
+            setProfile(false);
         } else {
-          setDiscover(false);
-          setHelp(false);
-          setNotification(false);
-          setProfile(false);
+            setDiscover(false);
+            setHelp(false);
+            setNotification(false);
+            setProfile(false);
         }
-      };
-    
+    };
+
     const openNotification = () => {
         if (!notification) {
             setNotification(true);
@@ -73,27 +75,27 @@ const NavBar = () => {
             setNotification(false);
         }
     };
-    
+
     const openProfile = () => {
         if (!profile) {
-          setProfile(true);
-          setHelp(false);
-          setDiscover(false);
-          setNotification(false);
+            setProfile(true);
+            setHelp(false);
+            setDiscover(false);
+            setNotification(false);
         } else {
-          setProfile(false);
+            setProfile(false);
         }
-      };
-    
+    };
 
-      const closeMenu = () => {
+
+    const closeMenu = () => {
         setProfile(false);
         setHelp(false);
         setDiscover(false);
         setNotification(false);
-      }    
+    }
     // const openSideBar = () => {
-   
+
     //     if (!openSideMenu) {
     //       setOpenSideMenu(true);
     //     } else {
@@ -101,28 +103,49 @@ const NavBar = () => {
     //     }
     //   };
 
-      const { 
-            currentAccount, 
-            connectWallet,
-            openError,
-            setOpenError,
-            error,
-            loading,
-            setLoading
-        } = useContext(
-            NFTMarketplaceContext
-        );
-    
-      useEffect(() => {
-        if(openError) {
+    const {
+        currentAccount,
+        connectWallet,
+        openError,
+        setOpenError,
+        error,
+        loading,
+        setLoading
+    } = useContext(
+        NFTMarketplaceContext
+    );
+
+
+    useEffect(() => {
+        if (openError) {
             notify(error)
             setTimeout(() => {
                 setOpenError(false)
             }, 500)
         }
-      }, [openError])
+    }, [openError])
 
-      console.log('currentAccount123', currentAccount);
+    useEffect(() => {
+        const localThemeMode = window.localStorage.getItem('themeMode'); 
+        console.log('localThemeMode', localThemeMode);
+        if(localThemeMode === null) {
+             window.localStorage.setItem('themeMode', 'light');
+        } else {
+            setlightMode(window.localStorage.getItem('themeMode') === 'light');
+        }
+    }, [])
+
+    const handleSwitchLightMode = () => {
+        setlightMode(!lightMode)
+        if (theme === 'light') {
+            setTheme('dark')
+            window.localStorage.setItem('themeMode', 'dark');
+        } else {
+            setTheme('light')
+            window.localStorage.setItem('themeMode', 'light');
+        }
+        console.log('handleSwitchLightMode', theme);
+    }
     return (
         <div className={Style.navbar}>
             <div className={Style.navbar_container}>
@@ -134,10 +157,22 @@ const NavBar = () => {
                             // alt="Profile"
                             width={60}
                             height={60}
-                            onClick={() => router.push("/")} 
+                            onClick={() => router.push("/")}
                             className={Style.logo_image}
                         />
 
+                    </div >
+
+                    <div className={Style.switch_read_mode}>
+
+                        <Image
+                            src={lightMode ? images.day : images.night}
+                            // alt="Profile"
+                            width={40}
+                            height={40}
+                            onClick={handleSwitchLightMode}
+                            className={Style.switch_read_mode_icon}
+                        />
                     </div>
                     {/* <div className={Style.navbar_container_left_box_input}>
                         <div className={Style.navbar_container_left_box_input_box}>
@@ -156,88 +191,88 @@ const NavBar = () => {
                             </div>
                         )}
                     </div>
-                        {/* HELP CENTER MENU */}
-                        <div className={Style.navbar_container_right_help}>
-                            <p onClick={(e) => openMenu(e)}>Help Center</p>
-                            {help && (
-                                <div className={Style.navbar_container_right_help_box}>
-                                    <HelpCenter  closeMenu={() => closeMenu()}/>
-                                </div>
-                            )}
-                        </div>
-
-
-                        {/* NOTIFICATION */}
-                        <div className={Style.navbar_container_right_notify}>
-                            <MdNotifications
-                                className={Style.notify}
-                                onClick={() => openNotification()}
-                            />
-                            {notification && <Notification />}
-                        </div>
-
-
-                        {/* CREATE BUTTON SECTION */}
-                        <div className={Style.navbar_container_right_button}>
-                            {currentAccount == "" ? (
-                                <Button btnName="Connect" handleClick={() => connectWallet()} />
-                            ) : (
-                                <Button
-                                    btnName="Create"
-                                    handleClick={() => router.push("/uploadNFT")}
-                                />
-                            )}
-                        </div>
-
-                        {
-                            currentAccount !=='' &&                         
-                            <div className={Style.navbar_container_right_profile_box} >
-                                <div className={Style.navbar_container_right_profile}>
-                                   
-
-                                        <div 
-                                            className={Style.navbar_container_right_profile_connectBox}
-                                            style={{ 
-                             
-                                            }}>
-                                                    <div className={Style.navbar_container_right_profile_connectBox_address}>{currentAccount.slice(0, 12)}</div>
-                                                    <div style={{ marginTop: '0.7rem', position: "relative", width: `${30}px`, height: `${30}px` }}>
-                                                    <Image
-                                                            src={images.provider1}
-                                                            alt={images.provider1}
-                                                            width={40}
-                                                            height={40}
-                                                            style={{ objectFit: "contain" }}
-                                                            // objectFit=
-                                                            // className={Style.navbar_container_right_profile_connectBox_logo}
-                                                    />
-                                                    </div>
-                                                
-                                         </div>
-                                        <Image
-                                            src={images.defaultUser}
-                                            alt="Profile"
-                                            width={50}
-                                            height={50}
-                                            onClick={() => openProfile()}
-                                            className={Style.navbar_container_right_profile_image}
-                                        />
-                                        {profile && <Profile closeMenu={closeMenu} currentAccount={currentAccount}/>}
-                                    
-                                </div>
+                    {/* HELP CENTER MENU */}
+                    <div className={Style.navbar_container_right_help}>
+                        <p onClick={(e) => openMenu(e)}>Help Center</p>
+                        {help && (
+                            <div className={Style.navbar_container_right_help_box}>
+                                <HelpCenter closeMenu={() => closeMenu()} />
                             </div>
-                        }
+                        )}
+                    </div>
 
 
-                        {/* MENU BUTTON */}
+                    {/* NOTIFICATION */}
+                    <div className={Style.navbar_container_right_notify}>
+                        <MdNotifications
+                            className={Style.notify}
+                            onClick={() => openNotification()}
+                        />
+                        {notification && <Notification />}
+                    </div>
 
-                        <div className={Style.navbar_container_right_menuBtn}>
-                            <CgMenuRight
-                                className={Style.menuIcon}
-                                onClick={() => openSideBar()}
+
+                    {/* CREATE BUTTON SECTION */}
+                    <div className={Style.navbar_container_right_button}>
+                        {currentAccount == "" ? (
+                            <Button btnName="Connect" handleClick={() => connectWallet()} />
+                        ) : (
+                            <Button
+                                btnName="Create"
+                                handleClick={() => router.push("/uploadNFT")}
                             />
+                        )}
+                    </div>
+
+                    {
+                        currentAccount !== '' &&
+                        <div className={Style.navbar_container_right_profile_box} >
+                            <div className={Style.navbar_container_right_profile}>
+
+
+                                <div
+                                    className={Style.navbar_container_right_profile_connectBox}
+                                    style={{
+
+                                    }}>
+                                    <div className={Style.navbar_container_right_profile_connectBox_address}>{currentAccount.slice(0, 12)}</div>
+                                    <div style={{ marginTop: '0.7rem', position: "relative", width: `${30}px`, height: `${30}px` }}>
+                                        <Image
+                                            src={images.provider1}
+                                            alt={images.provider1}
+                                            width={40}
+                                            height={40}
+                                            style={{ objectFit: "contain" }}
+                                        // objectFit=
+                                        // className={Style.navbar_container_right_profile_connectBox_logo}
+                                        />
+                                    </div>
+
+                                </div>
+                                <Image
+                                    src={images.defaultUser}
+                                    alt="Profile"
+                                    width={50}
+                                    height={50}
+                                    onClick={() => openProfile()}
+                                    className={Style.navbar_container_right_profile_image}
+                                />
+                                {profile && <Profile closeMenu={closeMenu} currentAccount={currentAccount} />}
+
+                            </div>
                         </div>
-                    
+                    }
+
+
+                    {/* MENU BUTTON */}
+
+                    <div className={Style.navbar_container_right_menuBtn}>
+                        <CgMenuRight
+                            className={Style.menuIcon}
+                            onClick={() => openSideBar()}
+                        />
+                    </div>
+
                 </div>
             </div>
 
@@ -248,39 +283,39 @@ const NavBar = () => {
                         setOpenSideMenu={setOpenSideMenu}
                         currentAccount={currentAccount}
                         connectWallet={connectWallet}
-                        />
+                    />
                 </div>
             )}
 
 
-            <ToastContainer 
+            <ToastContainer
                 position="top-center"
                 autoClose={4000}
-                // hideProgressBar={false}
-                // newestOnTop={false}
-                // closeOnClick
-                // rtl={false}
-                // pauseOnFocusLoss
-                // draggable
-                // pauseOnHover
-                // theme="light"
-                // transition="Bounce"
+            // hideProgressBar={false}
+            // newestOnTop={false}
+            // closeOnClick
+            // rtl={false}
+            // pauseOnFocusLoss
+            // draggable
+            // pauseOnHover
+            // theme="light"
+            // transition="Bounce"
             />
-            
+
             {
                 loading &&
-               
-                    <div style={{width: '100%', height: '100vh', position: 'fixed'}}>
-                        <PuffLoader
-                            color={color}
-                            loading={loading}
-                            cssOverride={override}
-                            size={50}
-                            aria-label="Loading Spinner"
-                            data-testid="loader"
-                        />
-                    </div>
-    
+
+                <div style={{ width: '100%', height: '100vh', position: 'fixed' }}>
+                    <PuffLoader
+                        color={color}
+                        loading={loading}
+                        cssOverride={override}
+                        size={50}
+                        aria-label="Loading Spinner"
+                        data-testid="loader"
+                    />
+                </div>
+
             }
 
         </div>

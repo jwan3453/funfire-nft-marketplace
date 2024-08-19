@@ -46,16 +46,20 @@ const collection = () => {
     {
       image: images.nft_image_3.src,
       seller: '',
+      owner: '',
+       name: 'demo nft'
     },
     {
       image: images.nft_image_1.src,
       seller: '',
       owner: '',
+       name: 'demo nft'
     },
     {
       image: images.nft_image_2.src,
       seller: '',
       owner: '',
+       name: 'demo nft'
     },
   ];
   console.log('collectionArray', collectionArray);

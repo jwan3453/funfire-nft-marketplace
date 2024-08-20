@@ -130,6 +130,7 @@ const NavBar = () => {
         console.log('localThemeMode', localThemeMode);
         if(localThemeMode === null) {
              window.localStorage.setItem('themeMode', 'light');
+             setTheme('light')
         } else {
             setlightMode(window.localStorage.getItem('themeMode') === 'light');
         }

@@ -9,20 +9,9 @@ import images from "../img";
 const aboutus = () => {
   const founderArray = [
     {
-      name: "Jacky",
+      name: "Jiewen Wang",
       position: "Co-founder and Chief Executive",
       images: images.founder3,
-    },
-    {
-      name: "Danien Jame",
-      position: "Co-founder and Chief Executive",
-      images: images.founder2,
-    },
-
-    {
-      name: "Dara Frazier",
-      position: "Co-Founder, Chief Strategy Officer",
-      images: images.founder4,
     },
   ];
 
